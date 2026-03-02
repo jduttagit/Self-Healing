@@ -1,0 +1,37 @@
+name: Self-healing CI (REST API)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  self-healing-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r self-healing/requirements.txt
+
+      - name: Run self-healing CI runner
+        run: |
+          python self-healing/ci/run_ci.py
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: self-healing-logs
+          path: |
+            self-healing/logs/server.log
+            self-healing/logs/tests.log
+

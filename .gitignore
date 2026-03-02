@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+logs/
+self-healing/logs/
+
+# OS
+.DS_Store
+
+# Project-specific
+simple-chatbot/venv/
